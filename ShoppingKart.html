@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="cart.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script type="text/javascript" src="https://gc.kis.scr.kaspersky-labs.com/1B74BD89-2A22-4B93-B451-1C9E1052A0EC/main.js" charset="UTF-8"></script><script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script src = "ng-infinite-scroll.js"></script>
+<script src = "jquery.progressTimer.js"></script>
+<script>
+    $(window).load(function(){
+        $('#myModal').modal('show');
+    });
+</script>
+</head>
+<body>
+<!-- The Modal -->
+<div class="modal hide fade" id="myModal">
+</div>
+<div ng-app='myApp' ng-controller='DemoController'>
+<div id ="titleDiv">Shopping Kart</div>
+<div id="contentDiv" class="row">
+<div id = "leftDiv" class="col-3">
+Select Category : 
+        <div ng-repeat="cat in category">
+            <b><input type="checkbox" ng-model="useCategory[$index]"/>{{cat}}</b>
+            <!--<span>({{ (productList | filter:cat).length }})</span>-->
+        </div>
+		<hr>
+Sort by:
+<br>
+<div>
+ <button ng-click="orderByAttribute = 'price'" class="btn btn-default"><b>Price</button>
+ <button ng-click="orderByAttribute = 'score'" class="btn btn-default"><b>Score</button>
+ </div>
+</div>
+<div id = "imagesDiv" infinite-scroll="loadMore()" infinite-scroll-disabled = "false" class="col-9">
+  <div  id="mainDiv" ng-repeat="product in productList | filter : filterCategory(product) | orderObjectBy:orderByAttribute" class="col-4">
+  <div id = "productDiv">
+     <p class = "panel-heading">#{{product.id}}&nbsp;&nbsp;{{product.name}}</p>
+    <img ng-src ="{{ product.img }}" alt = "{{ product.img}}"  class="imageStyle">
+	<h3> <small>{{product.cat}}</small></h3>
+	<p class="text-danger">{{product.price | currency:'&#8377;'}}</p>
+	</div>
+	</div>
+	</div>
+	
+	</div>
+<div id = "footer">A single place to visit for your wardrobe. <small>&copy; All rights reserved</small></div>
+</div>
+<script src="myApp.js">
+</script>
+</body>
+</html>
